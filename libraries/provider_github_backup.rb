@@ -35,10 +35,11 @@ class Chef
       action :create do
         @run_context.include_recipe 'git'
         install_packages
+        name = new_resource.parsed_name
 
         # Create directories
         [new_resource.parsed_data_dir, new_resource.parsed_log_dir].each do |d|
-          directory "#{new_resource.parsed_name} create #{d}" do
+          directory "#{name} create #{d}" do
             path d
             owner new_resource.parsed_user
             group new_resource.parsed_group
@@ -50,7 +51,7 @@ class Chef
         # Clone the backup utils repo
         remote = node['github-enterprise']['backup']['repository']
         dir = new_resource.parsed_dir
-        git "#{new_resource.parsed_name} clone #{remote}" do
+        git "#{name} clone #{remote}" do
           destination dir
           repository remote
           user new_resource.parsed_user
@@ -62,8 +63,8 @@ class Chef
         # TODO
 
         # Create the configuration
-        config_file = "#{dir}/#{new_resource.parsed_name}.config"
-        template "#{new_resource.parsed_name} create #{config_file}" do
+        config_file = "#{dir}/#{name}.config"
+        template "#{name} create #{config_file}" do
           path config_file
           source 'backup.config.erb'
           owner new_resource.parsed_user
@@ -78,10 +79,11 @@ class Chef
           action :create
         end
 
+        log_dir = new_resource.parsed_log_dir
         if new_resource.parsed_cron
-          cron_d "github-backup-#{new_resource.parsed_name}" do
+          cron_d "github-backup-#{name}" do
             predefined_value "@#{new_resource.cron}"
-            command "GHE_BACKUP_CONFIG=#{config_file} #{dir}/bin/ghe-backup"
+            command "GHE_BACKUP_CONFIG=#{config_file} #{dir}/bin/ghe-backup 1>>#{log_dir}/#{name}.log"
             user new_resource.parsed_user
           end
         end
