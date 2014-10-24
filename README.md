@@ -39,7 +39,7 @@ end
 `user` - User / owner of directories, and the user for scheduled tasks (if enabled)
 `group` - Group for directory permissions
 `snapshots` - Number of snapshots to retain
-`cron` - Either `'hourly'` or `'daily'`.
+`cron` - Either `'hourly'` or `'daily'`. This can also be set to `false` to disable the cron.
 `log_dir` - Directory used for log output (resource name will be appended to this path)
 `action` - The following actions are supported: `created`, `delete`, `run`, `restore`
 

@@ -51,8 +51,9 @@ class Chef
 
         # Clone the backup utils repo
         remote = node['github-enterprise']['backup']['repository']
+        dir = new_resource.parsed_dir
         git "#{new_resource.parsed_name} clone #{remote}" do
-          destination new_resource.parsed_dir
+          destination dir
           repository remote
           user new_resource.parsed_user
           group new_resource.parsed_group
@@ -63,7 +64,7 @@ class Chef
         # TODO
 
         # Create the configuration
-        config_file = "#{new_resource.parsed_dir}/#{new_resource.parsed_name}.config"
+        config_file = "#{dir}/#{new_resource.parsed_name}.config"
         template "#{new_resource.parsed_name} create #{config_file}" do
           path config_file
           source 'backup.config.erb'
@@ -77,6 +78,14 @@ class Chef
           )
           cookbook 'github-enterprise'
           action :create
+        end
+
+        if new_resource.parsed_cron
+          cron_d "github-backup-#{new_resource.parsed_name}" do
+            predefined_value "@#{new_resource.cron}"
+            command "GHE_BACKUP_CONFIG=#{config_file} #{dir}/bin/ghe-backup"
+            user new_resource.parsed_user
+          end
         end
       end
 
