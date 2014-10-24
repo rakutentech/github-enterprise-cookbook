@@ -6,7 +6,7 @@ github_backup 'default' do
   user 'root'
   group 'root'
   snapshots 10
-  schedule 'hourly'
+  cron 'hourly'
   log_dir '/var/log/github-backup'
   action :create
 end

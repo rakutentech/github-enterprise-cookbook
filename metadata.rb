@@ -6,3 +6,4 @@ description      'Configures utilities for Github Enterprise'
 long_description 'Configures utilities for Github Enterprise'
 version          '0.1.0'
 
+depends          'git'

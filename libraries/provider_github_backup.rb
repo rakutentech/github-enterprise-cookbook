@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+
+
 class Chef
   class Provider
     class GithubBackup < Chef::Provider::LWRPBase
@@ -33,6 +35,7 @@ class Chef
       # Action: Create
       #
       action :create do
+        @run_context.include_recipe 'git'
         install_packages
 
         # Create directories
@@ -72,7 +75,7 @@ class Chef
             :data_dir => new_resource.parsed_data_dir,
             :snapshots => new_resource.parsed_snapshots
           )
-          cookbook 'github-enterprise'
+          cookbook 'github_enterprise'
           action :create
         end
       end

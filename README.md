@@ -25,7 +25,7 @@ github_backup 'default' do
   user 'root'
   group 'root'
   snapshots 10
-  schedule 'hourly'
+  cron 'hourly'
   log_dir '/var/log/github-backup'
   action :create
 end
@@ -39,7 +39,7 @@ end
 `user` - User / owner of directories, and the user for scheduled tasks (if enabled)
 `group` - Group for directory permissions
 `snapshots` - Number of snapshots to retain
-`schedule` - Either `'hourly'` or `'daily'`.
+`cron` - Either `'hourly'` or `'daily'`.
 `log_dir` - Directory used for log output (resource name will be appended to this path)
 `action` - The following actions are supported: `created`, `delete`, `run`, `restore`
 
