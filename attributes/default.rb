@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: github_enterprise
-# Recipe:: default
+# Attribute:: default
 #
 # Copyright (C) 2014 Rakuten, Inc.
 #
@@ -16,3 +16,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+default['github_enterprise']['backup']['repository'] = 'https://github.com/github/backup-utils.git'

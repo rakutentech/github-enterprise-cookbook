@@ -1,0 +1,17 @@
+# GitHub Enterprise backup configuration file
+
+# The hostname of the GitHub Enterprise appliance to back up. The host
+# must be reachable via SSH from the backup host.
+GHE_HOSTNAME="<%= @hostname %>"
+
+# Path to where backup data is stored. By default this is the "data"
+# directory next to this file but can be set to an absolute path
+# elsewhere for backing up to a separate partition / mount point.
+GHE_DATA_DIR="<%= @data_dir %>"
+
+# The number of backup snapshots to retain. Old snapshots are pruned after each
+# successful ghe-backup run. This option should be tuned based on the frequency
+# of scheduled backup runs. If backups are scheduled hourly, snapshots will be
+# available for the past N hours; if backups are scheduled daily, snapshots will
+# be available for the past N days ...
+GHE_NUM_SNAPSHOTS=<%= @snapshots %>
