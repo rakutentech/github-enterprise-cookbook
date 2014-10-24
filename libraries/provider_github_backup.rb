@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: github_enterprise
+# Cookbook Name:: github-enterprise
 # Library:: provider_github_backup
 #
 # Copyright (C) 2014 Rakuten, Inc.
@@ -50,7 +50,7 @@ class Chef
         end
 
         # Clone the backup utils repo
-        remote = node['github_enterprise']['backup']['repository']
+        remote = node['github-enterprise']['backup']['repository']
         git "#{new_resource.parsed_name} clone #{remote}" do
           destination new_resource.parsed_dir
           repository remote
@@ -75,7 +75,7 @@ class Chef
             :data_dir => new_resource.parsed_data_dir,
             :snapshots => new_resource.parsed_snapshots
           )
-          cookbook 'github_enterprise'
+          cookbook 'github-enterprise'
           action :create
         end
       end

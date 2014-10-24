@@ -1,3 +1,3 @@
 # 0.1.0
 
-Initial release of github_enterprise
+Initial release of github-enterprise

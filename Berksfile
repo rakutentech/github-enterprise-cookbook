@@ -2,4 +2,4 @@ source "https://supermarket.getchef.com"
 
 metadata
 
-cookbook 'github_enterprise_test', path: 'test/fixtures/cookbooks/github_enterprise_test'
+cookbook 'github-enterprise_test', path: 'test/fixtures/cookbooks/github-enterprise_test'

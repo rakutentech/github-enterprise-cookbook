@@ -1,4 +1,4 @@
-name             'github_enterprise'
+name             'github-enterprise'
 maintainer       'Rakuten, Inc.'
 maintainer_email 'ops@rakops.com'
 license          'Apache 2.0'

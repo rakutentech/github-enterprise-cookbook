@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: github_enterprise
+# Cookbook Name:: github-enterprise
 # Recipe:: default
 #
 # Copyright (C) 2014 Rakuten, Inc.
