@@ -35,10 +35,16 @@ class Chef
       action :create do
         @run_context.include_recipe 'git'
         install_packages
+
         name = new_resource.parsed_name
+        log_dir = new_resource.parsed_log_dir
+        remote = node['github-enterprise']['backup']['repository']
+        dir = new_resource.parsed_dir
+        data_dir = new_resource.parsed_data_dir
+        config_file = "#{dir}/#{name}.config"
 
         # Create directories
-        [new_resource.parsed_data_dir, new_resource.parsed_log_dir].each do |d|
+        [data_dir, log_dir].each do |d|
           directory "#{name} create #{d}" do
             path d
             owner new_resource.parsed_user
@@ -49,8 +55,6 @@ class Chef
         end
 
         # Clone the backup utils repo
-        remote = node['github-enterprise']['backup']['repository']
-        dir = new_resource.parsed_dir
         git "#{name} clone #{remote}" do
           destination dir
           repository remote
@@ -63,13 +67,13 @@ class Chef
         # TODO
 
         # Create the configuration
-        config_file = "#{dir}/#{name}.config"
         template "#{name} create #{config_file}" do
           path config_file
           source 'backup.config.erb'
           owner new_resource.parsed_user
           group new_resource.parsed_group
           mode '0755'
+          recursive true
           variables(
             :hostname => new_resource.parsed_hostname,
             :data_dir => new_resource.parsed_data_dir,
@@ -79,7 +83,6 @@ class Chef
           action :create
         end
 
-        log_dir = new_resource.parsed_log_dir
         if new_resource.parsed_cron
           cron_d "github-backup-#{name}" do
             predefined_value "@#{new_resource.cron}"
@@ -95,9 +98,20 @@ class Chef
       action :delete do
         remove_packages
 
-        # TODO - Cleanup directories
-        # TODO - Cleanup Cron
-        # TODO - Cleanup data
+        log_dir = new_resource.parsed_log_dir
+        dir = new_resource.parsed_dir
+        data_dir = new_resource.parsed_data_dir
+
+        [data_dir, log_dir, dir].each do |d|
+          directory "#{name} create #{d}" do
+            recursive true
+            action :delete
+          end
+        end
+
+        cron_d "github-backup-#{name}" do
+          action :delete
+        end
       end
 
       action :run do
