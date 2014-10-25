@@ -41,7 +41,7 @@ end
 `snapshots` - Number of snapshots to retain
 `cron` - Either `'hourly'` or `'daily'`. This can also be set to `false` to disable the cron.
 `log_dir` - Directory used for log output (resource name will be appended to this path)
-`action` - The following actions are supported: `created`, `delete`, `run`, `restore`
+`action` - The following actions are supported: `create`, `delete`
 
 Its important to note that the resource `name` (in this case: `'default'`) will be appended to the `data_dir` path, allowing you to define many Github Enterprise resources on a single backup host.
 
