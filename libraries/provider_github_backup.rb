@@ -50,6 +50,7 @@ class Chef
             owner new_resource.parsed_user
             group new_resource.parsed_group
             mode '0755'
+            recursive true
             action :create
           end
         end
