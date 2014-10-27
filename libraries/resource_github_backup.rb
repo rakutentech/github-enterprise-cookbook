@@ -32,7 +32,7 @@ class Chef
       attribute :user, :kind_of => String, :default =>  'root'
       attribute :group, :kind_of => String, :default =>  'root'
       attribute :snapshots, :kind_of => Integer, :default =>  10
-      attribute :cron, :kind_of => [String, Array, TrueClass, FalseClass], :default =>  'hourly'
+      attribute :cron, :kind_of => [String, Array, FalseClass], :default =>  'hourly'
       attribute :log_dir, :kind_of => String, :default =>  '/var/log/github-backup'
 
       def parsed_hostname
@@ -61,9 +61,6 @@ class Chef
 
       def parsed_cron
         return cron if cron
-        # TODO - Parse out the various options
-        #return cron if cron.is_a? Array
-        #return case cron ... 
       end
 
       def parsed_log_dir

@@ -12,7 +12,7 @@ platforms:
   - name: centos-6.5
 
 suites:
-  - name: backup-default
+  - name: default
     run_list:
     - recipe[github-enterprise_test::backup]
     attributes:

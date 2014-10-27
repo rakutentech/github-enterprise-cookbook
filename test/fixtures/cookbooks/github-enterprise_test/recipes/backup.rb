@@ -1,4 +1,3 @@
-
 github_backup 'default' do
   hostname 'github.example.com'
   dir '/opt/github-backup-utils'
@@ -6,7 +5,7 @@ github_backup 'default' do
   user 'root'
   group 'root'
   snapshots 10
-  cron 'hourly'
+  cron '@hourly'
   log_dir '/var/log/github-backup'
   action :create
 end
