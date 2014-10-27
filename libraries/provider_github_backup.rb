@@ -73,7 +73,6 @@ class Chef
           owner new_resource.parsed_user
           group new_resource.parsed_group
           mode '0755'
-          recursive true
           variables(
             :hostname => new_resource.parsed_hostname,
             :data_dir => new_resource.parsed_data_dir,
