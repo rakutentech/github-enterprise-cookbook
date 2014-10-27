@@ -114,14 +114,6 @@ class Chef
         end
       end
 
-      action :run do
-        backup
-      end
-
-      action :restore do
-        # TODO
-      end
-
       #
       # Package Dependencies
       #
@@ -151,13 +143,6 @@ class Chef
             action :remove
           end
         end
-      end
-
-      #
-      # Perform the backup
-      #
-      def backup
-        # TODO - Perform the actual backup
       end
     end
   end
