@@ -90,7 +90,6 @@ class Chef
         cron_d "github-backup-#{name}" do
           predefined_value "@#{new_resource.cron}"
           command "GHE_BACKUP_CONFIG=#{config_file} #{dir}/bin/ghe-backup 1>>#{log_dir}/#{name}.log"
-          comment "Github backup job"
           user new_resource.parsed_user
           only_if new_resource.parsed_cron
         end
