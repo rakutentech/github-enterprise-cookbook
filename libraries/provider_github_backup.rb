@@ -64,8 +64,12 @@ class Chef
           enable_submodules true
         end
 
-        # Ensure bin/ files are executable
-        # TODO
+        ["#{dir}/bin/ghe-backup", "#{dir}/bin/ghe-restore", "#{dir}/bin/ghe-host-check"].each do |f|
+          file "#{name} set permissions on #{f}" do
+            path f
+            mode '0755'
+          end
+        end
 
         # Create the configuration
         template "#{name} create #{config_file}" do
