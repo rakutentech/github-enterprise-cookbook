@@ -1,5 +1,7 @@
 # Github Enterprise Cookbook
 
+[![Build Status](https://secure.travis-ci.org/rakutentech/github-enterprise-cookbook.png)](http://travis-ci.org/rakutentech/github-enterprise-cookbook)
+
 Facilities for automation around Github Enterprise.
 
 Currently, just backup and restore.
