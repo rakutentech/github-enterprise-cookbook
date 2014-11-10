@@ -88,7 +88,7 @@ class Chef
         end
 
         cron_d "github-backup-#{name}" do
-          predefined_value "#{new_resource.parsed_cron}"
+          predefined_value new_resource.parsed_cron
           command "GHE_BACKUP_CONFIG=#{config_file} #{dir}/bin/ghe-backup 1>>#{log_dir}/#{name}.log"
           user new_resource.parsed_user
         end
