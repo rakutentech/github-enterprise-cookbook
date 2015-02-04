@@ -14,4 +14,3 @@ supports         'ubuntu'
 
 depends          'git'
 depends          'cron'
-
