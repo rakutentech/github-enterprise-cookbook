@@ -1,0 +1,20 @@
+image: rakuten/chefdk
+script:
+  - mkdir -p ${HOME}/.berkshelf
+  - echo "{\"ssl\":{\"verify\":false}}" > ${HOME}/.berkshelf/config.json
+  - mkdir -p ${PWD}/.chef
+  - echo $$chef_client_key | base64 --decode > ${PWD}/.chef/client.pem
+  - chmod 400 ${PWD}/.chef/client.pem
+  - echo "node_name 'drone-test'" > ${PWD}/.chef/knife.rb
+  - echo "client_key '${PWD}/.chef/client.pem'" >> ${PWD}/.chef/knife.rb
+  - echo 'ssl_verify_mode :verify_none' >> ${PWD}/.chef/knife.rb
+  - berks install
+  - chef exec rubocop
+  - chef exec foodcritic -f any .
+notify:
+  slack:
+    webhook_url: $$slack_url
+    on_started: true
+    on_success: true
+    on_failure: true
+

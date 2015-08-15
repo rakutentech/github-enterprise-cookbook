@@ -120,9 +120,9 @@ class Chef
       # Package Dependencies
       #
       def packages
-        %w[
+        %w(
           rsync
-        ]
+        )
       end
 
       #
