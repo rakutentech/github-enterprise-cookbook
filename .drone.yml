@@ -1,0 +1,7 @@
+image: predominant/chefdk
+script:
+  - chef exec bundle install
+  - berks install
+  - chef exec rubocop
+  - chef exec foodcritic -f any .
+
