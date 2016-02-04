@@ -19,17 +19,36 @@
 
 resource_name :ghe_backup_utils
 
-property :dir, String, name_property: true
-property :user, String, default: 'ghe'
-property :repo, String, default: 'https://github.com/github/backup-utils.git'
-property :branch, String, default: 'master'
+property :dir, kind_of: String, name_property: true
+property :user, kind_of: String, default: 'ghe'
+property :repo, kind_of: String, default: 'https://github.com/github/backup-utils.git'
+property :branch, kind_of: String, default: 'master'
+property :enable_cron, kind_of: [TrueClass, FalseClass], default: true
 
 action :create do
   git dir do
     repository repo
     revision branch
     user user
+    enable_submodules true
     action :sync
+  end
+
+  # Permissions
+  [
+    ::File.join(dir, 'bin/ghe-backup'),
+    ::File.join(dir, 'bin/ghe-restore'),
+    ::File.join(dir, 'bin/ghe-host-check')
+  ].each do |f|
+    file "#{name} set permissions on #{f}" do
+      path f
+      mode '0755'
+    end
+  end
+
+  ghe_cron 'Github Enterprise Backup' do
+    
+    only_if { enable_cron }
   end
 end
 
