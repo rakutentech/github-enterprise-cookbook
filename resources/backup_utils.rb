@@ -23,7 +23,8 @@ property :dir, kind_of: String, name_property: true
 property :user, kind_of: String, default: 'ghe'
 property :repo, kind_of: String, default: 'https://github.com/github/backup-utils.git'
 property :branch, kind_of: String, default: 'master'
-property :enable_cron, kind_of: [TrueClass, FalseClass], default: true
+property :data_dir, kind_of: String, default: '/opt/github/backup-data'
+property :log_dir, kind_of: String, default: '/opt/github/backup-logs'
 
 action :create do
   git dir do
@@ -46,15 +47,20 @@ action :create do
     end
   end
 
-  ghe_cron 'Github Enterprise Backup' do
-    
-    only_if { enable_cron }
+  [data_dir, log_dir].each do |d|
+    directory "#{name} create #{d}" do
+      path d
+      owner user
+      mode '0755'
+      recursive true
+      action :create
+    end
   end
 end
 
 action :delete do
-  directory dir do
-    recursive true
-    action :delete
-  end
+  [data_dir, log_dir, dir].each do |d|
+    directory d do
+      action :delete
+    end
 end
