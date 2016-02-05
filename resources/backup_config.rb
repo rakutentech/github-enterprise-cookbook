@@ -24,6 +24,7 @@ property :user, kind_of: String, default: 'ghe'
 property :group, kind_of: String, default: 'ghe'
 property :template, kind_of: String, default: 'backup.config.erb'
 property :data_dir, kind_of: String, default: '/opt/github/backup-data'
+property :log_dir, kind_of: String, default: '/opt/github/backup-logs'
 property :num_snapshots, kind_of: Fixnum, default: 10
 
 action :create do
