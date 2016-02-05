@@ -19,12 +19,12 @@
 
 resource_name :ghe_backup_config
 
-property :config_file, String, name_property: true
-property :user, String, default: 'ghe'
-property :group, String, default: 'ghe'
-property :template, String, default: 'backup.config.erb'
-property :data_dir, String, default: '/opt/github/backup-data'
-property :num_snapshots, 
+property :config_file, kind_of: String, name_property: true
+property :user, kind_of: String, default: 'ghe'
+property :group, kind_of: String, default: 'ghe'
+property :template, kind_of: String, default: 'backup.config.erb'
+property :data_dir, kind_of: String, default: '/opt/github/backup-data'
+property :num_snapshots, kind_of: Fixnum, default: 10
 
 action :create do
   template config_file do
