@@ -42,8 +42,6 @@ default_action :create
 action :create do
   include_recipe 'git'
 
-  Chef::Log.warn "Repo is: #{repo_url}"
-
   directory ::File.dirname(dir) do
     owner user
     action :create
