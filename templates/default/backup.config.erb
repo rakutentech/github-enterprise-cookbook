@@ -15,3 +15,24 @@ GHE_DATA_DIR="<%= @data_dir %>"
 # available for the past N hours; if backups are scheduled daily, snapshots will
 # be available for the past N days ...
 GHE_NUM_SNAPSHOTS=<%= @snapshots %>
+
+<% unless @restore_host.nil? || @restore_host.empty? -%>
+# The hostname of the GitHub appliance to restore. If you've set up a separate
+# GitHub appliance to act as a standby for recovery, specify its IP or hostname
+# here. The host to restore to may also be specified directly when running
+# ghe-restore so use of this variable isn't strictly required.
+#
+GHE_RESTORE_HOST="<%= @restore_host %>"
+<% end -%>
+
+<% unless @ssh_opts.nil? || @ssh_opts.empty? -%>
+# Any extra options passed to the SSH command.  Nothing required by default
+#
+GHE_EXTRA_SSH_OPTS="<%= @ssh_opts %>"
+<% end -%>
+
+<% unless @s3_bucket.nil? || @s3_bucket.empty? -%>
+# Add s3 bucket for configuring which bucket to use in ghe-s3-backup and
+# ghe-s3-restore
+# GHE_S3_BUCKET="<%= @s3_bucket %>"
+<% end -%>
