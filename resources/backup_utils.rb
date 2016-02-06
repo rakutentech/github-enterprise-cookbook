@@ -63,4 +63,5 @@ action :delete do
     directory d do
       action :delete
     end
+  end
 end
