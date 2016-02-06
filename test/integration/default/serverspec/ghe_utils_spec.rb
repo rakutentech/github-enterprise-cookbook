@@ -2,11 +2,11 @@ require 'serverspec'
 
 set :backend, :exec
 
-describe file('/opt/github-backup-utils') do
+describe file('/opt/github/backup-utils') do
   it { should be_directory }
 end
 
-describe file('/opt/github-backup-utils/bin/ghe-backup') do
+describe file('/opt/github/backup-utils/bin/ghe-backup') do
   it { should be_executable }
 end
 
