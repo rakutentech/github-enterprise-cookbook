@@ -26,7 +26,7 @@ property :config_file, kind_of: String, default: 'backup.config'
 property :log_dir, kind_of: String, default: '/opt/github/backup-logs'
 
 action :create do
-  cron_d "github-backup-#{name}" do
+  cron_d cron_name do
     predefined_value '@hourly'
     command "GHE_BACKUP_CONFIG=#{::File.join(dir, config_file)} #{dir}/bin/ghe-backup 1>>#{log_dir}/#{name}.log"
     user user
@@ -35,7 +35,11 @@ action :create do
 end
 
 action :delete do
-  cron_d "github-backup-#{name}" do
+  cron_d cron_name do
     action :delete
   end
+end
+
+def cron_name
+  "github-backup-#{name}"
 end
