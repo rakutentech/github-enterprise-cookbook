@@ -21,14 +21,36 @@ resource_name :ghe_backup_utils
 
 property :dir, kind_of: String, name_property: true
 property :user, kind_of: String, default: 'ghe'
-property :repo, kind_of: String, default: 'https://github.com/github/backup-utils.git'
+property :repo_url, kind_of: String, default: 'https://github.com/github/backup-utils.git'
 property :branch, kind_of: String, default: 'master'
 property :data_dir, kind_of: String, default: '/opt/github/backup-data'
 property :log_dir, kind_of: String, default: '/opt/github/backup-logs'
 
+default_action :create
+
+# TODO Load existing values to prevent re-converge incorrectly
+# load_current_value do
+#   if (::File.exist?(dir))
+#     user ::Etc.getpwuid(::File.stat(dir).uid).name
+#     repo 
+#     branch
+#     data_dir
+#     log_dir
+#   end
+# end
+
 action :create do
+  include_recipe 'git'
+
+  Chef::Log.warn "Repo is: #{repo_url}"
+
+  directory ::File.dirname(dir) do
+    owner user
+    action :create
+  end
+
   git dir do
-    repository repo
+    repository repo_url
     revision branch
     user user
     enable_submodules true
