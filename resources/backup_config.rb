@@ -20,18 +20,23 @@
 resource_name :ghe_backup_config
 
 property :config_file, kind_of: String, name_property: true
-property :user, kind_of: String, default: 'ghe'
-property :group, kind_of: String, default: 'ghe'
-property :template, kind_of: String, default: 'backup.config.erb'
+property :hostname, kind_of: String
+property :ssh_user, kind_of: String, default: 'admin'
+property :ssh_opts, kind_of: Hash, default: {}
+property :owner, kind_of: String, default: 'root'
+property :group, kind_of: String, default: 'root'
+property :config_template, kind_of: String, default: 'backup.config.erb'
+property :template_cookbook, kind_of: String, default: 'github-enterprise'
 property :data_dir, kind_of: String, default: '/opt/github/backup-data'
 property :log_dir, kind_of: String, default: '/opt/github/backup-logs'
 property :num_snapshots, kind_of: Fixnum, default: 10
 
 action :create do
   template config_file do
-    source template
-    owner user
-    group group
+    cookbook template_cookbook
+    source config_template
+    owner new_resource.owner
+    group new_resource.group
     variables({
       :hostname => hostname,
       :num_snapshots => num_snapshots,

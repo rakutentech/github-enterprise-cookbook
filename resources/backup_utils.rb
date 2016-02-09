@@ -20,7 +20,7 @@
 resource_name :ghe_backup_utils
 
 property :dir, kind_of: String, name_property: true
-property :user, kind_of: String, default: 'ghe'
+property :user, kind_of: String, default: 'root'
 property :repo_url, kind_of: String, default: 'https://github.com/github/backup-utils.git'
 property :branch, kind_of: String, default: 'master'
 property :data_dir, kind_of: String, default: '/opt/github/backup-data'
