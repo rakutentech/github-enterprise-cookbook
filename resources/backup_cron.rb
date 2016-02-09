@@ -20,7 +20,7 @@
 resource_name :ghe_backup_cron
 
 property :name, kind_of: String, name_property: true
-property :owner, kind_of: String, default: 'root'
+property :user, kind_of: String, default: 'root'
 property :group, kind_of: String, default: 'root'
 property :dir, kind_of: String, default: '/opt/github/backup-utils'
 property :config_file, kind_of: String, default: 'backup.config'
@@ -30,7 +30,7 @@ action :create do
   cron_d cron_name do
     predefined_value '@hourly'
     command "GHE_BACKUP_CONFIG=#{::File.join(dir, config_file)} #{dir}/bin/ghe-backup 1>>#{log_dir}/#{name}.log"
-    user new_resource.owner
+    user new_resource.user
     action :create
   end
 end
