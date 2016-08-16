@@ -18,3 +18,4 @@
 #
 
 default['github-enterprise']['backup']['repository'] = 'https://github.com/github/backup-utils.git'
+default['github-enterprise']['backup']['branch'] = 'stable'
