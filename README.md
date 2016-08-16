@@ -52,7 +52,7 @@ Its important to note that the resource `name` (in this case: `'default'`) will 
 - Author:: Graham Weldon <graham.weldon@mail.rakuten.com>
 
 ```text
-Copyright:: 2014 Rakuten, Inc.
+Copyright:: 2016 Rakuten, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

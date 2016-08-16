@@ -2,7 +2,7 @@
 # Cookbook Name:: github-enterprise
 # Library:: provider_github_backup
 #
-# Copyright (C) 2014 Rakuten, Inc.
+# Copyright (C) 2016 Rakuten, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
