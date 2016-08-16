@@ -22,7 +22,7 @@ resource_name :ghe_backup_utils
 property :dir, kind_of: String, name_property: true
 property :user, kind_of: String, default: 'root'
 property :repo_url, kind_of: String, default: 'https://github.com/github/backup-utils.git'
-property :branch, kind_of: String, default: 'master'
+property :branch, kind_of: String, default: 'stable'
 property :data_dir, kind_of: String, default: '/opt/github/backup-data'
 property :log_dir, kind_of: String, default: '/opt/github/backup-logs'
 
@@ -43,14 +43,14 @@ action :create do
   include_recipe 'git'
 
   directory ::File.dirname(dir) do
-    owner user
+    owner new_resource.user
     action :create
   end
 
   git dir do
-    repository repo_url
-    revision branch
-    user user
+    repository new_resource.repo_url
+    revision new_resource.branch
+    user new_resource.user
     enable_submodules true
     action :sync
   end
@@ -70,7 +70,7 @@ action :create do
   [data_dir, log_dir].each do |d|
     directory "#{name} create #{d}" do
       path d
-      owner user
+      owner new_resource.user
       mode '0755'
       recursive true
       action :create
@@ -79,7 +79,7 @@ action :create do
 end
 
 action :delete do
-  [data_dir, log_dir, dir].each do |d|
+  [new_resource.data_dir, new_resource.log_dir,new_resource. dir].each do |d|
     directory d do
       action :delete
     end
