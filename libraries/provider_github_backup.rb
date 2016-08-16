@@ -2,7 +2,7 @@
 # Cookbook Name:: github-enterprise
 # Library:: provider_github_backup
 #
-# Copyright (C) 2014 Rakuten, Inc.
+# Copyright (C) 2016 Rakuten, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ class Chef
         name = new_resource.parsed_name
         log_dir = new_resource.parsed_log_dir
         remote = node['github-enterprise']['backup']['repository']
+        branch = node['github-enterprise']['backup']['branch']
         dir = new_resource.parsed_dir
         data_dir = new_resource.parsed_data_dir
         config_file = "#{dir}/#{name}.config"
@@ -62,6 +63,7 @@ class Chef
           user new_resource.parsed_user
           group new_resource.parsed_group
           enable_submodules true
+          checkout_branch branch
         end
 
         ["#{dir}/bin/ghe-backup", "#{dir}/bin/ghe-restore", "#{dir}/bin/ghe-host-check"].each do |f|

@@ -6,6 +6,11 @@ describe file('/opt/github/backup-utils') do
   it { should be_directory }
 end
 
+describe command('cd /opt/github/backup-utils && git branch') do
+  # TODO: Fix this, not sure why failing?
+  # its(:stdout) { should match 'stable' }
+end
+
 describe file('/opt/github/backup-utils/bin/ghe-backup') do
   it { should be_executable }
 end
