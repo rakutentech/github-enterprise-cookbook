@@ -42,12 +42,12 @@ default_action :create
 action :create do
   include_recipe 'git'
 
-  directory ::File.dirname(dir) do
+  directory ::File.dirname(new_resource.dir) do
     owner new_resource.user
     action :create
   end
 
-  git dir do
+  git new_resource.dir do
     repository new_resource.repo_url
     revision new_resource.branch
     user new_resource.user
@@ -56,18 +56,19 @@ action :create do
   end
 
   # Permissions
-  [
-    ::File.join(dir, 'bin/ghe-backup'),
-    ::File.join(dir, 'bin/ghe-restore'),
-    ::File.join(dir, 'bin/ghe-host-check')
-  ].each do |f|
-    file "#{name} set permissions on #{f}" do
-      path f
+  %w(
+    ghe-backup
+    ghe-restore
+    ghe-host-check
+  ).each do |f|
+    f_path = ::File.join(new_resource.dir, 'bin', f)
+    file "#{name} set permissions on #{f_path}" do
+      path f_path
       mode '0755'
     end
   end
 
-  [data_dir, log_dir].each do |d|
+  [new_resource.data_dir, new_resource.log_dir].each do |d|
     directory "#{name} create #{d}" do
       path d
       owner new_resource.user
@@ -79,7 +80,11 @@ action :create do
 end
 
 action :delete do
-  [new_resource.data_dir, new_resource.log_dir,new_resource. dir].each do |d|
+  [
+    new_resource.data_dir,
+    new_resource.log_dir,
+    new_resource.dir
+  ].each do |d|
     directory d do
       action :delete
     end

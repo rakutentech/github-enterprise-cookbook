@@ -6,9 +6,8 @@ describe file('/opt/github/backup-utils') do
   it { should be_directory }
 end
 
-describe command('cd /opt/github/backup-utils && git branch') do
-  # TODO: Fix this, not sure why failing?
-  # its(:stdout) { should match 'stable' }
+describe command('cd /opt/github/backup-utils && git ls-remote | grep $(git rev-parse deploy)') do
+  its(:stdout) { should match 'refs/heads/stable' }
 end
 
 describe file('/opt/github/backup-utils/bin/ghe-backup') do
