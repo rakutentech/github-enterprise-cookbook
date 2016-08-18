@@ -32,23 +32,23 @@ property :log_dir, kind_of: String, default: '/opt/github/backup-logs'
 property :num_snapshots, kind_of: Fixnum, default: 10
 
 action :create do
-  template config_file do
-    cookbook template_cookbook
-    source config_template
+  template new_resource.config_file do
+    cookbook new_resource.template_cookbook
+    source new_resource.config_template
     owner new_resource.owner
     group new_resource.group
     variables({
-      :hostname => hostname,
-      :num_snapshots => num_snapshots,
-      :data_dir => data_dir,
-      :ssh_opts => ssh_opts
+      :hostname => new_resource.hostname,
+      :num_snapshots => new_resource.num_snapshots,
+      :data_dir => new_resource.data_dir,
+      :ssh_opts => new_resource.ssh_opts
     })
     action :create
   end
 end
 
 action :delete do
-  template config_file do
+  template new_resource.config_file do
     action :delete
   end
 end
