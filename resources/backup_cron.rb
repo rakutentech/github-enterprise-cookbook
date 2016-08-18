@@ -27,20 +27,24 @@ property :config_file, kind_of: String, default: 'backup.config'
 property :log_dir, kind_of: String, default: '/opt/github/backup-logs'
 
 action :create do
-  cron_d cron_name do
+  file_config = ::File.join(new_resource.dir, new_resource.config_file)
+  file_backup = ::File.join(new_resource.dir, 'bin', 'ghe-backup')
+  file_log    = ::File.join(new_resource.log_dir, "#{cron_name(new_resource.name)}.log")
+
+  cron_d cron_name(new_resource.name) do
     predefined_value '@hourly'
-    command "GHE_BACKUP_CONFIG=#{::File.join(dir, config_file)} #{dir}/bin/ghe-backup 1>>#{log_dir}/#{name}.log"
+    command "GHE_BACKUP_CONFIG=#{file_config} #{file_backup} 1>>#{file_log}"
     user new_resource.user
     action :create
   end
 end
 
 action :delete do
-  cron_d cron_name do
+  cron_d cron_name(new_resource.name) do
     action :delete
   end
 end
 
-def cron_name
-  "github-backup-#{name}"
+def cron_name(resource_name)
+  "github-backup-#{resource_name}"
 end

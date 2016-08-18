@@ -15,5 +15,5 @@ platforms:
 suites:
   - name: default
     run_list:
-    - recipe[github-enterprise_test::backup]
+    - recipe[github-enterprise-test::backup]
     attributes:
